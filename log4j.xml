@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+		   <!--  <appender-ref ref="SYSLOG"/> -->
+		    <appender-ref ref="FILE"/>
+	</appender>
+	<appender name="SYSLOG" class="org.apache.log4j.net.SyslogAppender">
+		<param name="Facility" value="LOCAL6"/>
+		<param name="SyslogHost" value="127.0.0.1"/>
+		<layout class="org.apache.log4j.PatternLayout">
+  		     <param name="ConversionPattern"
+                            value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+		</layout>
+	</appender>
+    <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="/opt/waslogs/70/nfo/AddDepositAccount.log"/>
+	    <param name="Append" value="true"/>
+	    <param name="MaxFileSize" value="100MB"/>
+	    <param name="MaxBackupIndex" value="2"/>
+		<layout class="org.apache.log4j.PatternLayout">
+  		     <param name="ConversionPattern"
+                            value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+		</layout>
+	</appender>
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<param name="LocationInfo" value="true"/> <layout
+		class="org.apache.log4j.PatternLayout"> <param
+		name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+		</layout> </appender>
+	<root>
+		<priority value="debug"/>
+		<appender-ref ref="ASYNC"/>
+	</root>
+</log4j:configuration>

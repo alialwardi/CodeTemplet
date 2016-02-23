@@ -1,0 +1,101 @@
+  <project name="AddDepositAccount" default="main" basedir=".">
+  <property name="app.name" value="AddDepositAccount" />
+  <property name="src" location="src" /> 
+  <property name="weblib" location="${basedir}\WebContent\WEB-INF\lib\" />
+  <property name="waslib" location="C:\Program Files\IBM\SDP\runtimes\base_v7\lib" />
+  <property name="build" location="../${app.name}_TEMP" /> 
+  <property name="war-bld" location="../${app.name}WAR" />
+  <property name="ear-dir" location="../${app.name}EAR" /> 
+  <property name="dist" location="../${app.name}BIN" /> 
+  <property name="JSF207_LIB" location="C:\Program Files\IBM\SDP\runtimes\base_v7\optionalLibraries\Apache\MyFaces2.0" /> 
+  	
+
+  <path id="classpath">
+	<fileset dir="${weblib}">
+		<include name="*.jar" /> 
+  	</fileset>
+	<fileset dir="${waslib}">
+		<include name="*.jar" /> 
+  	</fileset>
+	<fileset dir="${JSF207_LIB}">
+		<include name="*.jar" /> 
+  	</fileset>
+  </path>
+  	
+  	
+  	<!-- Main -->
+  	<target name="main" depends="clean, init, compileWar, buildWarFile, buildEarFile, cleanUp "/>
+
+	<target name="init">
+		<echo message="Init Called" />
+  		<tstamp/>
+  		<mkdir dir="${build}"/>
+  		<mkdir dir="${dist}"/>
+		<mkdir dir="WebContent\WEB-INF\classes"/>
+        <!-- Copy all files (.properties and xml etc)file to WebContent\WEB-INF\classes -->
+		<copy todir="WebContent\WEB-INF\classes">
+			<fileset dir="${src}">
+				<include name="**/*.properties"/>
+			</fileset>
+			<fileset dir="${src}">
+				<include name="*.props"/>
+			</fileset>
+			<fileset dir="${src}">
+				<include name="*.dtd"/>
+			</fileset>
+			<fileset dir="${src}">
+				<include name="*.xml"/>	
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="clean" description="Removes previous build">
+		<echo message="Deleting previous build ${dist}\${app.name}EAR.ear file..." /> 
+		<delete file="${dist}\${app.name}EAR.ear" />
+ 		<delete dir="WebContent\WEB-INF\classes"/>
+		<delete dir="${jar-file}"/> 
+	</target>
+  	
+	<target name="buildJar" description="Build Jar File">
+		<echo message="Building JAR file..."/> 
+		<javac srcdir="${jar-src}" destdir="${jar-bld}" classpathref="classpath.jar"/>
+		<jar jarfile="${jar-file}">
+			<fileset dir="${jar-bld}"/>
+				<fileset dir="${jar-src}">
+				<include name="**/*.xml"/>
+				<include name="**/*.properties"/>
+				<include name="**/*.props"/>
+			</fileset>
+		</jar>   	
+	</target>
+  	
+
+	<target name="compileWar" description="Compile Source Code" >
+		<echo message="Compiling WAR Source Code"/> 
+		<javac srcdir="${src}" destdir="WebContent\WEB-INF\classes" classpathref="classpath">
+			<exclude name="**/test/*"/>  
+		</javac>  	
+	</target>
+
+	<target name="buildWarFile" description="Build War File">
+		<echo message="Building ${app.name}WAR.war"/> 
+		<war destfile="${build}\${app.name}WAR.war" webxml="WebContent\WEB-INF\web.xml" basedir="WebContent">
+		</war>
+	</target>
+ 
+	<target name="buildEarFile" description="Build Ear File">
+		<echo message="Building Ear File ${app.name}EAR.ear"/> 
+		<ear destfile="${dist}\${app.name}EAR.ear" appxml="${ear-dir}\META-INF\application.xml">
+			<fileset dir="${ear-dir}\" includes="*.s*,*.jar,*.war,*.xml"/>
+			<fileset dir="${build}" includes="*.jar,*.war"/>
+		</ear>
+	</target>
+	
+	<target name="cleanUp" description="Clean temp directory">
+		<echo message="Removing temporary files..."/>
+		<delete dir="${build}"/>
+	</target>
+
+  
+</project>
