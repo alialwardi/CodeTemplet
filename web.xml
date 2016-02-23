@@ -7,7 +7,7 @@
 
 	<listener>
 		<display-name>StartupListener</display-name>
-		<listener-class>org.navyfederal.openMMSA.listeners.StartupListener</listener-class>
+		<listener-class>openMMSA.listeners.StartupListener</listener-class>
 	</listener>
 
 
@@ -31,7 +31,7 @@
 		<description>RSA Filter</description>
 		<display-name>RSAFilter</display-name>
 		<filter-name>RSAFilter</filter-name>
-		<filter-class>org.nfcu.rsaaa.filter.RSAAAFilter</filter-class>
+		<filter-class>rsaaa.filter.RSAAAFilter</filter-class>
 		<init-param>
 			<param-name>rsaEvent</param-name>
 			<param-value>Application's_RSA_Event</param-value>
@@ -47,7 +47,7 @@
  -->	
 	<filter>
 		<filter-name>MainFilter</filter-name>
-		<filter-class>org.navyfederal.openMMSA.filters.MainFilter</filter-class>
+		<filter-class>openMMSA.filters.MainFilter</filter-class>
 		<init-param>
 			<description>Set to true if we should insert Fiserv resize Javascript into response</description>
 			<param-name>insertFiservResizeJavascript</param-name>
@@ -74,7 +74,7 @@
 	<filter>
 		<display-name>NoCacheFilter</display-name>
 		<filter-name>NoCacheFilter</filter-name>
-		<filter-class>org.navyfederal.openMMSA.filters.NoCacheFilter</filter-class>
+		<filter-classopenMMSA.filters.NoCacheFilter</filter-class>
 	</filter>
 
  	<filter-mapping>
@@ -137,7 +137,7 @@
 		<description></description>
 		<display-name>StartServlet</display-name>
 		<servlet-name>StartServlet</servlet-name>
-		<servlet-class>org.navyfederal.openMMSA.servlets.StartServlet</servlet-class>
+		<servlet-class>openMMSA.servlets.StartServlet</servlet-class>
 		<load-on-startup>-1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
